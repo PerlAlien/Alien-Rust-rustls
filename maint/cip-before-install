@@ -3,5 +3,6 @@
 set -ex
 
 cip pkg rust
+cip exec mkdir -p /home/cip/tmp
 cip exec cargo install cargo-c
 cip exec cargo install cargo-clone
