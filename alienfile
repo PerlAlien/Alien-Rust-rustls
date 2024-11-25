@@ -1,0 +1,20 @@
+use alienfile;
+
+plugin 'PkgConfig' => (
+  pkg_name => 'rustls',
+);
+
+meta->prop->{destdir} = 1;
+
+share {
+  requires 'Alien::cargo';
+  requires 'Alien::cargo::clone';
+  requires 'Alien::cargo::capi';  
+  download [
+    [ 'cargo', 'clone', 'rustls-ffi' ],
+  ];
+  plugin 'Extract::Directory';
+  build [
+    'cargo cinstall --release --prefix %{.install.prefix} --destdir $DESTDIR',
+  ];
+}

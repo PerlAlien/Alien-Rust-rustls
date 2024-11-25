@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -ex
+
+cip pkg rust
+cip exec cargo install cargo-c
+cip exec cargo install cargo-clone
