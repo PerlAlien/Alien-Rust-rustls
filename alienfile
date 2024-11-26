@@ -1,4 +1,5 @@
 use alienfile;
+use File::chdir;
 
 plugin 'PkgConfig' => (
   pkg_name => 'rustls',
@@ -11,7 +12,11 @@ share {
   requires 'Alien::cargo::clone';
   requires 'Alien::cargo::capi';  
   download [
-    [ 'cargo', 'clone', 'rustls-ffi' ],
+    [ 'cargo', 'clone', 'rustls-ffi', '--', '.' ],
+    sub {
+      # cargo-clone uses https internally
+      shift->install_prop->{download_detail}->{$CWD} = { protocol => 'https' };
+    }
   ];
   plugin 'Extract::Directory';
   build [
